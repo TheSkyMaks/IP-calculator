@@ -4,5 +4,40 @@
         <name>IP_calculator</name>
     </assembly>
     <members>
+        <member name="T:IP_calculator.App">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IP_calculator.App.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IP_calculator.App.OnStart">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IP_calculator.App.OnSleep">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IP_calculator.App.OnResume">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:IP_calculator.MainPage">
+            <summary>
+            MainPage
+            </summary>
+        </member>
+        <member name="M:IP_calculator.MainPage.#ctor">
+            <summary>
+            MainPage()
+            </summary>
+        </member>
     </members>
 </doc>

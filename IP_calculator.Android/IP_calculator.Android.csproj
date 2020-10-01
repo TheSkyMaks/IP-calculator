@@ -39,6 +39,7 @@
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidCreatePackagePerAbi>true</AndroidCreatePackagePerAbi>
     <DocumentationFile>bin\Debug\IP_calculator.Android.xml</DocumentationFile>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

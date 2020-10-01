@@ -1,16 +1,15 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
 
 namespace IP_calculator.Droid
 {
-    [Activity(Label = "IP_calculator", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    /// <summary>
+    /// 
+    /// </summary>
+    [Activity(Label = "IP_calculator", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
+    public class MainActivity : Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         /// <summary>
         /// Start of project
@@ -25,12 +24,19 @@ namespace IP_calculator.Droid
 
             //Здесь производится инициализация платформ Xamarin.Essentials и Xamarin.Forms:
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             //экземпляр класса App передается в метод LoadApplication(), который определен у класса Xamarin.Forms.Platform.Android.FormsAppCompatActivity, 
             // и собственно происходит запуск приложения Xamarin Forms:
             LoadApplication(new App());
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requestCode"></param>
+        /// <param name="permissions"></param>
+        /// <param name="grantResults"></param>
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
