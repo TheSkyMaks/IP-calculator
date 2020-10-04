@@ -6,27 +6,27 @@
     <members>
         <member name="T:IP_calculator.App">
             <summary>
-            
+            Start point of app
             </summary>
         </member>
         <member name="M:IP_calculator.App.#ctor">
             <summary>
-            
+            Start point of app
             </summary>
         </member>
         <member name="M:IP_calculator.App.OnStart">
             <summary>
-            
+            Handle when your app starts
             </summary>
         </member>
         <member name="M:IP_calculator.App.OnSleep">
             <summary>
-            
+            Handle when your app sleeps
             </summary>
         </member>
         <member name="M:IP_calculator.App.OnResume">
             <summary>
-            
+             Handle when your app resumes
             </summary>
         </member>
         <member name="T:IP_calculator.MainPage">

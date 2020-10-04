@@ -3,12 +3,12 @@
 namespace IP_calculator
 {
     /// <summary>
-    /// 
+    /// Start point of app
     /// </summary>
     public partial class App : Application
     {
         /// <summary>
-        /// 
+        /// Start point of app
         /// </summary>
         public App()
         {
@@ -17,7 +17,7 @@ namespace IP_calculator
         }
 
         /// <summary>
-        /// 
+        /// Handle when your app starts
         /// </summary>
         protected override void OnStart()
         {
@@ -25,7 +25,7 @@ namespace IP_calculator
         }
 
         /// <summary>
-        /// 
+        /// Handle when your app sleeps
         /// </summary>
         protected override void OnSleep()
         {
@@ -33,7 +33,7 @@ namespace IP_calculator
         }
 
         /// <summary>
-        /// 
+        ///  Handle when your app resumes
         /// </summary>
         protected override void OnResume()
         {

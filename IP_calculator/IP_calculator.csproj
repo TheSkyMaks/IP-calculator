@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <PackageIcon>IP_calc.png</PackageIcon>
-    <ApplicationIcon>IP_calc.ico</ApplicationIcon>
+    <ApplicationIcon></ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -12,6 +12,10 @@
     <DebugSymbols>true</DebugSymbols>
     <DocumentationFile>D:\TheSkyMaks\projects\VisualStudio\Xamarin\IP_calculator\IP_calculator\IP_calculator.xml</DocumentationFile>
     <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\TheSkyMaks\projects\VisualStudio\Xamarin\IP_calculator\IP_calculator\IP_calculator.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

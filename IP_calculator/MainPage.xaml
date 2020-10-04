@@ -10,22 +10,12 @@
     -->
 
     <StackLayout Margin="10,35,10,10">
-        <Label Text="IP_calculator"
-               HorizontalOptions="Center"
-               FontAttributes="Bold" />
-        <Editor x:Name="editor"
-                Placeholder="Enter your note"
-                HeightRequest="100" />
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Button Text="Save"
-                    Clicked="OnSaveButtonClicked" />
-            <Button Grid.Column="1"
-                    Text="Delete"
-                    Clicked="OnDeleteButtonClicked"/>
-        </Grid>
+        <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
+            <Label Text="Welcome to IP calculator!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+        </Frame>
+        <Label Text="Start calculate now!" FontSize="Title" Padding="30,10,30,10"/>
+        <Entry x:Name="IP_entry" Placeholder="255.255.0.0" TextChanged="IP_TextChanged"/>
+        
+        <!-- TabIndex  -->
     </StackLayout>
 </ContentPage>

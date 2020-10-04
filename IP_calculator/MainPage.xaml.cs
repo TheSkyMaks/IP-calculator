@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using Xamarin.Forms;
 
 namespace IP_calculator
@@ -9,8 +8,7 @@ namespace IP_calculator
     /// </summary>
     public partial class MainPage : ContentPage
     {
-        string _fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "notes.txt");
-
+        private readonly Label textLabel = new Label();
         /// <summary>
         /// MainPage()
         /// </summary>
@@ -18,24 +16,13 @@ namespace IP_calculator
         {
             InitializeComponent();
 
-            if (File.Exists(_fileName))
-            {
-                editor.Text = File.ReadAllText(_fileName);
-            }
+            IP_entry.TextChanged += IP_TextChanged;
+
         }
 
-        void OnSaveButtonClicked(object sender, EventArgs e)
+        private void IP_TextChanged(object sender, TextChangedEventArgs e)
         {
-            File.WriteAllText(_fileName, editor.Text);
-        }
-
-        void OnDeleteButtonClicked(object sender, EventArgs e)
-        {
-            if (File.Exists(_fileName))
-            {
-                File.Delete(_fileName);
-            }
-            editor.Text = string.Empty;
+            textLabel.Text = IP_entry.Text;
         }
     }
 }
