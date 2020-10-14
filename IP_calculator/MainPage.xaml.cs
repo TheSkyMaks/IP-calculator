@@ -8,7 +8,7 @@ namespace IP_calculator
     /// </summary>
     public partial class MainPage : ContentPage
     {
-        private readonly Label textLabel = new Label();
+        //private readonly Label textLabel = new Label();
         /// <summary>
         /// MainPage()
         /// </summary>
@@ -17,12 +17,18 @@ namespace IP_calculator
             InitializeComponent();
 
             IP_entry.TextChanged += IP_TextChanged;
+            Mask_entry.TextChanged += Mask_TextChanged;
+        }
 
+        private void Mask_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void IP_TextChanged(object sender, TextChangedEventArgs e)
         {
-            textLabel.Text = IP_entry.Text;
+            throw new NotImplementedException();
+            //textLabel.Text = IP_entry.Text;
         }
     }
 }

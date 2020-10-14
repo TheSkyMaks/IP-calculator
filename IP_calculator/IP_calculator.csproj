@@ -5,17 +5,18 @@
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <PackageIcon>IP_calc.png</PackageIcon>
     <ApplicationIcon></ApplicationIcon>
+    <AssemblyVersion>0.0.0.2</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <DocumentationFile>D:\TheSkyMaks\projects\VisualStudio\Xamarin\IP_calculator\IP_calculator\IP_calculator.xml</DocumentationFile>
+    <DocumentationFile>IP_calculator\IP_calculator.xml</DocumentationFile>
     <Optimize>true</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>D:\TheSkyMaks\projects\VisualStudio\Xamarin\IP_calculator\IP_calculator\IP_calculator.xml</DocumentationFile>
+    <DocumentationFile>IP_calculator\IP_calculator.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

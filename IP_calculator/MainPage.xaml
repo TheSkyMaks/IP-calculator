@@ -10,12 +10,30 @@
     -->
 
     <StackLayout Margin="10,35,10,10">
-        <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
-            <Label Text="Welcome to IP calculator!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+        <Frame BackgroundColor="#2196F3" Padding="5" CornerRadius="0">
+            <Label Text="IP calculator" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
         </Frame>
+        <!--
         <Label Text="Start calculate now!" FontSize="Title" Padding="30,10,30,10"/>
-        <Entry x:Name="IP_entry" Placeholder="255.255.0.0" TextChanged="IP_TextChanged"/>
-        
-        <!-- TabIndex  -->
+        TabIndex 
+        -->
+        <Entry x:Name="IP_entry" Placeholder="IP. Example: 192.168.0.0" TextChanged="IP_TextChanged"/>
+        <Entry x:Name="Mask_entry" Placeholder="Mask. Example: 255.255.0.0" TextChanged="Mask_TextChanged"/>
+       <!--
+        <Label Text="Result:" FontSize="Title" Padding="30,10,30,10"/>
+        -->
+        <Label Text="IP:" FontSize="Large"/>
+        <Label Text="Mask:" FontSize="Large"/>    
+        <TableView Intent="Form" x:Name="SwiCell" RowHeight="50">
+            <TableRoot>
+                <TableSection>
+                    <SwitchCell x:Name="BinarOrDecimal" Text="Binar / Decimal" />
+                    <SwitchCell x:Name="Mask_ShortOrLong" Text="Mask Short / Long" />                    
+                </TableSection>                
+            </TableRoot>
+        </TableView>
+        <Label Text="Amount of addresses:" FontSize="Large"/>
+        <Label Text="Coefficient of mask:" FontSize="Large"/>
+        <Label Text="Created by TheSkyMaks" HorizontalOptions="End"/>
     </StackLayout>
 </ContentPage>
