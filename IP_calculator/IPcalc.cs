@@ -41,7 +41,7 @@ namespace IP_calculator
             {
                 return;
             }
-            MaskAndIP = $"\nIP: {MaskOrIP_ToString(ip_binary)} \nMask: {MaskOrIP_ToString(mask_binary)}";
+            MaskAndIP = $"\nIP: {MaskOrIP_ToString(ip_binary)} \n\nMask: {MaskOrIP_ToString(mask_binary)}";
             CalculateIp();
         }
 
@@ -57,7 +57,7 @@ namespace IP_calculator
             }
             ip_decimal = ConvertIPandMask_toDecimal(ip_binary);
             mask_decimal = ConvertIPandMask_toDecimal(mask_binary);
-            MaskAndIP = $"\nIP: {MaskOrIP_ToString(ip_decimal)} | {MaskOrIP_ToString(ip_binary)} \nMask: {MaskOrIP_ToString(mask_decimal)}  |  {MaskOrIP_ToString(mask_binary)}";
+            MaskAndIP = $"IP: {MaskOrIP_ToString(ip_decimal)} \n\nMask: {MaskOrIP_ToString(mask_decimal)}";
             CalculateIp();
         }
 
@@ -65,20 +65,21 @@ namespace IP_calculator
         {
             CalcAddresses();
             CalcHosts();
-            CalcIvertMask(mask_binary);
             CalcNetWorkAddress(ip_binary, mask_binary);
+            CalcIvertMask(mask_binary);
             CalcBroadcastAddress(nwAddress, invert_mask_binary);
         }
+
         internal string ResultOfCalculate()
         {
             var Results = "";
             Results += $"{MaskAndIP}"
-                        + $"\n Short Mask: {ShortMask}"
-                        + $"\n Inverted Mask: {MaskOrIP_ToString(invert_mask_decimal)}  |  {MaskOrIP_ToString(invert_mask_binary)}"
-                        + $"\n Network: {MaskOrIP_ToString(NetWorkAddress)}  |  {MaskOrIP_ToString(nwAddress)}"
-                        + $"\n Broadcast {MaskOrIP_ToString(BroadCastAddress)}  |  {MaskOrIP_ToString(BroadcastAddr)}"
-                        + $"\n Addresses: {Addresses}"
-                        + $"\n Hosts: {Hosts}";
+                        + $"\n\n Short Mask: {ShortMask}"
+                        + $"\n\n Inverted Mask: {MaskOrIP_ToString(invert_mask_decimal)}  |  {MaskOrIP_ToString(invert_mask_binary)}"
+                        + $"\n\n Network: {MaskOrIP_ToString(NetWorkAddress)}  |  {MaskOrIP_ToString(nwAddress)}"
+                        + $"\n\n Broadcast {MaskOrIP_ToString(BroadCastAddress)}  |  {MaskOrIP_ToString(BroadcastAddr)}"
+                        + $"\n\n Addresses: {Addresses}"
+                        + $"\n\n Hosts: {Hosts}";
             return Results;
         }
         #endregion
@@ -271,14 +272,12 @@ namespace IP_calculator
             return res;
         }
 
-        //TODO: fix
         private void CalcNetWorkAddress(string[] ip, string[] mask)
         {
             for (int i = 0; i < ip.Length; i++)
             {
                 nwAddress[i] = AND_operation(ip[i], mask[i]);
             }
-            Array.Reverse(nwAddress);
             NetWorkAddress = ConvertIPandMask_toDecimal(nwAddress);
         }
 
@@ -288,19 +287,19 @@ namespace IP_calculator
             {
                 throw new ArgumentException("operator1 != operator2");
             }
-            string result = "";
+            char[] result = new char[operator1.Length];
             for (int i = 0; i < operator1.Length; i++)
             {
                 if (operator1[i] == operator2[i])
                 {
-                    result += operator1[i];
+                    result[i] = operator1[i];
                 }
                 else
                 {
-                    result += "0";
+                    result[i] = '0';
                 }
             }
-            return result;
+            return string.Concat(result);
         }
 
         private void CalcBroadcastAddress(string[] netAddress, string[] invMask)
@@ -309,7 +308,6 @@ namespace IP_calculator
             {
                 BroadcastAddr[i] = OR_operation(netAddress[i], invMask[i]);
             }
-            Array.Reverse(BroadcastAddr);
             BroadCastAddress = ConvertIPandMask_toDecimal(BroadcastAddr);
         }
 

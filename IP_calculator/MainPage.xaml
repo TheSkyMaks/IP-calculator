@@ -11,24 +11,19 @@
     -->
 
     <StackLayout Margin="10,35,10,10">
-        <Frame BackgroundColor="#2196F3" Padding="5" CornerRadius="0">
-            <Label Text="IP calculator" 
-                   HorizontalTextAlignment="Center" 
-                   TextColor="White" 
-                   FontSize="36"/>
-        </Frame>
-
         <syncmaskededit:SfMaskedEdit x:Name="IP_entr"                                     
                                      ValidationMode="KeyPress" 
                                      PromptChar="0"
                                      ValueMaskFormat="IncludePromptAndLiterals"
-                                     ValueChanged="IP_TextChanged"/>
+                                     ValueChanged="IP_TextChanged"
+                                     ClearButtonVisibility="WhileEditing"/>
 
         <syncmaskededit:SfMaskedEdit x:Name="Mask_entr"                                     
                                      ValidationMode="KeyPress"
                                      PromptChar="0" 
                                      ValueMaskFormat="IncludePromptAndLiterals"
-                                     ValueChanged="Mask_TextChanged"/>
+                                     ValueChanged="Mask_TextChanged"
+                                     ClearButtonVisibility="WhileEditing"/>
         <Label x:Name="Error_label" 
                FontSize="Medium"/>
 
