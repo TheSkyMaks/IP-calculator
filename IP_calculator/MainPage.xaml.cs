@@ -7,29 +7,52 @@ namespace IP_calculator
     /// </summary>
     public partial class MainPage : ContentPage
     {
+        #region XamarinView
+        internal IPcalc Calculator;
         internal bool IsBinary;
-        internal string[] IP;
-        internal string[] Mask;
+        internal string[] IP_start;
+        internal string[] Mask_start;
         /// <summary>
         /// MainPage()
         /// </summary>
         public MainPage()
         {
-            IP = new string[4];
-            Mask = new string[4];
             InitializeComponent();
             IsBinary = false;
             EntryBinaryOrDecimal(false);
         }
+
+        private string[] StartSeed_Decimal()
+        {
+            string[] seed = new string[4];
+            for (int i = 0; i < seed.Length; i++)
+            {
+                seed[i] = "000";
+            }
+            return seed;
+        }
+
+        private string[] StartSeed_Binary()
+        {
+            string[] seed = new string[4];
+            for (int i = 0; i < seed.Length; i++)
+            {
+                seed[i] = "00000000";
+            }
+            return seed;
+        }
+
         private void IP_TextChanged(object sender, Syncfusion.XForms.MaskedEdit.ValueChangedEventArgs e)
         {
-            IP = e.Value.ToString().Split('.');
+            IP_start = e.Value.ToString().Split('.');
+            CalculatePLS();
         }
 
         private void Mask_TextChanged(object sender, Syncfusion.XForms.MaskedEdit.ValueChangedEventArgs e)
         {
-            Mask = e.Value.ToString().Split('.');
-        }       
+            Mask_start = e.Value.ToString().Split('.');
+            CalculatePLS();
+        }
 
         private void BinarOrDecimal_CellChanged(object sender, ToggledEventArgs e)
         {
@@ -38,15 +61,16 @@ namespace IP_calculator
 
         private void EntryBinaryOrDecimal(bool isBinary)
         {
-            var Calculator = new IPcalcul();
+            Calculator = new IPcalc();
+            var seed = new string[4];
             if (isBinary)
             {
                 IsBinary = true;
-                Mask_entr.Mask = "0000 0000.0000 0000.0000 0000.0000 0000";
-                Mask_entr.Watermark = "Your Mask. Example: 1111 1111.1111 1111.0000 0000.0000 0000";
-                IP_entr.Mask = "0000 0000.0000 0000.0000 0000.0000 0000";
-                IP_entr.Watermark = "Your IP. Example: 1111 1111.1111 1111.0100 0000.0000 0001";
-                Calculator.StartWithBinary(IP, Mask);
+                Mask_entr.Mask = "00000000.00000000.00000000.00000000";
+                Mask_entr.Watermark = "Your Mask. Example: 11111111.11111111.00000000.00000000";
+                IP_entr.Mask = "00000000.00000000.00000000.00000000";
+                IP_entr.Watermark = "Your IP. Example: 11111111.11111111.01000000.00000001";
+                seed = StartSeed_Binary();
             }
             else
             {
@@ -55,15 +79,26 @@ namespace IP_calculator
                 IP_entr.Watermark = "Your IP. Example: 192.168.0.0";
                 Mask_entr.Mask = "000.000.000.000";
                 Mask_entr.Watermark = "Your Mask. Example: 255.255.0.0";
-                Calculator.StartWithDecimal(IP, Mask);
+                seed = StartSeed_Decimal();                
             }
-            Result_label.Text = Calculator.Results;
+            IP_start = seed;
+            Mask_start = seed;
+            CalculatePLS();
         }
-        /*
-        private void Mask_ShortOrLong_CellChanged(object sender, ToggledEventArgs e)
-        {
-            var isShortMask = e.Value;
+
+        private void CalculatePLS()
+        {            
+            if (IsBinary)
+            {
+                Calculator.StartWithBinary(IP_start, Mask_start);
+            }
+            else
+            {
+                Calculator.StartWithDecimal(IP_start, Mask_start);
+            }
+            Error_label.Text = Calculator.ErrorMessage;
+            Result_label.Text = Calculator.ResultOfCalculate();
         }
-        */
+        #endregion
     }
 }

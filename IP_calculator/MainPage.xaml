@@ -29,7 +29,8 @@
                                      PromptChar="0" 
                                      ValueMaskFormat="IncludePromptAndLiterals"
                                      ValueChanged="Mask_TextChanged"/>
-        
+        <Label x:Name="Error_label" 
+               FontSize="Medium"/>
 
         <TableView Intent="Form" x:Name="SwiCell" RowHeight="50">
             <TableRoot>
@@ -47,7 +48,7 @@
         </TableView>
 
         <Label x:Name="Result_label" 
-               FontSize="Large"/>
+               FontSize="Medium"/>
 
         <Label Text="Created by TheSkyMaks"
                HorizontalOptions="End"/>

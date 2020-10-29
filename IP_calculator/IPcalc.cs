@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace IP_calculator
 {
-    internal class IPcalcul
+    class IPcalc 
     {
         #region Variables        
         internal byte[] ip_decimal = new byte[4];
@@ -18,40 +18,31 @@ namespace IP_calculator
         internal byte[] BroadCastAddress = new byte[4];
         internal int ShortMask;
         internal double Addresses;
+        internal double Hosts;
         internal string MaskAndIP;
         internal string ErrorMessage;
-        internal string Results;
         #endregion
+
 
         #region Control
         internal void CalculateIp()
-        {
-            CalcShortMask(mask_binary);
+        {           
             CalcAddresses();
+            CalcHosts();
             CalcIvertMask(mask_binary);
             CalcNetWorkAddress(ip_binary, mask_binary);
             CalcBroadcastAddress(nwAddress, invert_mask_binary);
-            ResultOfCalculate();
         }
-        private string ResultOfCalculate()
+        internal string ResultOfCalculate()
         {
-            Results = "";
-            if (!string.IsNullOrEmpty(ErrorMessage))
-            {
-                Results += ErrorMessage;
-            }
-            Results += "\n" + MaskAndIP
-                        + $"\n"
-                        + $"\n"
-                        + $"\n"
-                        + $"\n"
-                        + $"\n"
-                        + $"\n"
-                        + $"\n"
-                        + $"\n"
-                        + $"\n"
-                        + $"\n";
-
+            var Results = "";
+            Results += $"{MaskAndIP}"
+                        + $"\n Short Mask: {ShortMask}"
+                        + $"\n Inverted Mask: {MaskOrIP_ToString(invert_mask_decimal)}  |  {MaskOrIP_ToString(invert_mask_binary)}"
+                        + $"\n Network: {MaskOrIP_ToString(NetWorkAddress)}  |  {MaskOrIP_ToString(nwAddress)}"
+                        + $"\n Broadcast {MaskOrIP_ToString(BroadCastAddress)}  |  {MaskOrIP_ToString(BroadcastAddr)}"
+                        + $"\n Addresses: {Addresses}"
+                        + $"\n Hosts: {Hosts}";
             return Results;
         }
         #endregion
@@ -63,20 +54,21 @@ namespace IP_calculator
             ErrorMessage = "";
             ip_binary = Validation_Binary(ip);
             mask_binary = Validation_Binary(mask);
-            if (ip_decimal == null || mask_decimal == null || Validation_mask(mask))
+            CalcShortMask(mask_binary);
+            if (ip_decimal == null || mask_decimal == null || Validation_mask(mask_binary))
             {
                 return;
             }
-            ip_decimal = ConvertIPandMask_toDecimal(mask_binary);
-            mask_decimal = ConvertIPandMask_toDecimal(ip_binary);
-            //TODO: MaskAndIP
+            ip_decimal = ConvertIPandMask_toDecimal(ip_binary);
+            mask_decimal = ConvertIPandMask_toDecimal(mask_binary);
+            MaskAndIP = $"\nIP: {MaskOrIP_ToString(ip_decimal)} | {MaskOrIP_ToString(ip_binary)} \nMask: {MaskOrIP_ToString(mask_decimal)}  |  {MaskOrIP_ToString(mask_binary)}";
             CalculateIp();
         }
 
         private string[] Validation_Binary(string[] mustBeBinary)
         {
             var itIsBinary = new string[4];
-            if (mustBeBinary.SelectMany(str => str.Where(chr => chr != '1' && chr != '0').Select(chr => new { })).Count() > 0) 
+            if (mustBeBinary.SelectMany(str => str.Where(chr => chr != '1' && chr != '0').Select(chr => new { })).Count() > 0)
             {
                 ErrorMessage += "number should be 0 or 1";
                 throw new ArgumentException("mustBeDecimal not 0 / 1");
@@ -89,13 +81,18 @@ namespace IP_calculator
             ErrorMessage = "";
             ip_decimal = Validation_Decimal(ip);
             mask_decimal = Validation_Decimal(mask);
-            if(ip_decimal == null || mask_decimal == null || Validation_mask(mask))
+            if (ip_decimal == null || mask_decimal == null)
             {
                 return;
             }
-            ip_binary = ConvertIPandMask_toBinary(mask_decimal);
-            mask_binary = ConvertIPandMask_toBinary(ip_decimal);
-            //TODO: MaskAndIP;
+            ip_binary = ConvertIPandMask_toBinary(ip_decimal);
+            mask_binary = ConvertIPandMask_toBinary(mask_decimal);
+            CalcShortMask(mask_binary);
+            if (Validation_mask(mask_binary))
+            {
+                return;
+            }
+            MaskAndIP = $"\nIP: {MaskOrIP_ToString(ip_binary)} \nMask: {MaskOrIP_ToString(mask_binary)}";
             CalculateIp();
         }
 
@@ -118,12 +115,13 @@ namespace IP_calculator
             var last1 = string.Concat(maskOfNetWork).LastIndexOf('1');
             if (!(last1 < ShortMask))
             {
-                ErrorMessage += "Mask should contain 1, and then 0. Example 1111 1111.1111 1111.1111 1100.0000 0000";
-                throw new ArgumentException("Mask error");
+                ErrorMessage += "Mask should contain 1, and then 0. Example 1111 1111.1111 1111.1111 1100.0000 0000"; 
+                return true;
             }
             return false;
         }
         #endregion
+
 
         #region Converters        
         private string[] ConvertIPandMask_toBinary(byte[] maskORip)
@@ -187,7 +185,30 @@ namespace IP_calculator
                 throw new ArgumentException("Error in converting binary to decimal");
             }
         }
+
+        private string MaskOrIP_ToString(string[] needConvertThis)
+        {
+            var res = "";
+            foreach (var item in needConvertThis)
+            {
+                res += $"{item}.";
+            }
+            res = res.Remove(res.Length - 1);
+            return res;
+        }
+
+        private string MaskOrIP_ToString(byte[] needConvertThis)
+        {
+            var res = "";
+            foreach (var item in needConvertThis)
+            {
+                res += $"{item}.";
+            }
+            res = res.Remove(res.Length - 1);
+            return res;
+        }
         #endregion
+
 
         #region CalcOperators       
 
@@ -203,6 +224,22 @@ namespace IP_calculator
             Addresses = Math.Pow(2, 32 - ShortMask);
         }
 
+        private void CalcHosts()
+        {
+            if (Addresses < 3)
+            {
+                if(Addresses == 1)
+                {
+                    Hosts = 1;
+                }
+                else if (Addresses == 2)
+                {
+                    Hosts = 2;
+                }
+            }
+            Hosts = Addresses - 2;
+        }
+
         private void CalcIvertMask(string[] maskOfNetWork)
         {
             Array.Reverse(maskOfNetWork);
@@ -210,14 +247,25 @@ namespace IP_calculator
             {
                 invert_mask_binary[i] = ReverseString(maskOfNetWork[i]);
             }
-            ConvertIPandMask_toDecimal(invert_mask_binary);
+            Array.Reverse(invert_mask_binary);
+            invert_mask_decimal = ConvertIPandMask_toDecimal(invert_mask_binary);
         }
 
         public static string ReverseString(string s)
         {
-            char[] charArray = s.ToCharArray();
-            Array.Reverse(charArray);
-            return new string(charArray);
+            string res = "";
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == '1')
+                {
+                    res += '0';
+                }
+                else if(s[i] == '0')
+                {
+                    res += '1';
+                }
+            }
+            return res;
         }
 
         private void CalcNetWorkAddress(string[] ip, string[] mask)
@@ -282,5 +330,6 @@ namespace IP_calculator
             return result;
         }
         #endregion
+
     }
 }
