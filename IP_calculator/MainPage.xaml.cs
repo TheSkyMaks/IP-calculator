@@ -8,7 +8,7 @@ namespace IP_calculator
     public partial class MainPage : ContentPage
     {
         #region XamarinView
-        internal IPcalc Calculator;
+        internal IPcalc Calculator = new IPcalc();
         internal bool IsBinary;
         internal string[] IP_start;
         internal string[] Mask_start;
@@ -22,7 +22,7 @@ namespace IP_calculator
             EntryBinaryOrDecimal(false);
         }
 
-        private string[] StartSeed_Decimal()
+        private string[] Seed_Decimal()
         {
             string[] seed = new string[4];
             for (int i = 0; i < seed.Length; i++)
@@ -32,7 +32,7 @@ namespace IP_calculator
             return seed;
         }
 
-        private string[] StartSeed_Binary()
+        private string[] Seed_Binary()
         {
             string[] seed = new string[4];
             for (int i = 0; i < seed.Length; i++)
@@ -61,7 +61,6 @@ namespace IP_calculator
 
         private void EntryBinaryOrDecimal(bool isBinary)
         {
-            Calculator = new IPcalc();
             var seed = new string[4];
             if (isBinary)
             {
@@ -70,7 +69,7 @@ namespace IP_calculator
                 Mask_entr.Watermark = "Your Mask. Example: 11111111.11111111.00000000.00000000";
                 IP_entr.Mask = "00000000.00000000.00000000.00000000";
                 IP_entr.Watermark = "Your IP. Example: 11111111.11111111.01000000.00000001";
-                seed = StartSeed_Binary();
+                seed = Seed_Binary();
             }
             else
             {
@@ -79,15 +78,14 @@ namespace IP_calculator
                 IP_entr.Watermark = "Your IP. Example: 192.168.0.0";
                 Mask_entr.Mask = "000.000.000.000";
                 Mask_entr.Watermark = "Your Mask. Example: 255.255.0.0";
-                seed = StartSeed_Decimal();                
+                seed = Seed_Decimal();
             }
             IP_start = seed;
             Mask_start = seed;
-            CalculatePLS();
         }
 
         private void CalculatePLS()
-        {            
+        {
             if (IsBinary)
             {
                 Calculator.StartWithBinary(IP_start, Mask_start);

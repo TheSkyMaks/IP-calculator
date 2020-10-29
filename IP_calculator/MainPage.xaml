@@ -38,11 +38,6 @@
                     <SwitchCell x:Name="BinarOrDecimal" 
                                 Text="Decimal / Binar"
                                 OnChanged="BinarOrDecimal_CellChanged"/>
-                    <!--
-                    <SwitchCell x:Name="Mask_ShortOrLong" 
-                                Text="Mask Long / Short"
-                                OnChanged="Mask_ShortOrLong_CellChanged"/>
-                    -->
                 </TableSection>
             </TableRoot>
         </TableView>
