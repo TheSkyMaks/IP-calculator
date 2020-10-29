@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:syncmaskededit="clr-namespace:Syncfusion.XForms.MaskedEdit;assembly=Syncfusion.SfMaskedEdit.XForms"
              x:Class="IP_calculator.MainPage">
 
     <!--
@@ -11,29 +12,44 @@
 
     <StackLayout Margin="10,35,10,10">
         <Frame BackgroundColor="#2196F3" Padding="5" CornerRadius="0">
-            <Label Text="IP calculator" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+            <Label Text="IP calculator" 
+                   HorizontalTextAlignment="Center" 
+                   TextColor="White" 
+                   FontSize="36"/>
         </Frame>
-        <!--
-        <Label Text="Start calculate now!" FontSize="Title" Padding="30,10,30,10"/>
-        TabIndex 
-        -->
-        <Entry x:Name="IP_entry" Placeholder="IP. Example: 192.168.0.0" TextChanged="IP_TextChanged"/>
-        <Entry x:Name="Mask_entry" Placeholder="Mask. Example: 255.255.0.0" TextChanged="Mask_TextChanged"/>
-       <!--
-        <Label Text="Result:" FontSize="Title" Padding="30,10,30,10"/>
-        -->
-        <Label Text="IP:" FontSize="Large"/>
-        <Label Text="Mask:" FontSize="Large"/>    
+
+        <syncmaskededit:SfMaskedEdit x:Name="IP_entr"                                     
+                                     ValidationMode="KeyPress" 
+                                     PromptChar="0"
+                                     ValueMaskFormat="IncludePromptAndLiterals"
+                                     ValueChanged="IP_TextChanged"/>
+
+        <syncmaskededit:SfMaskedEdit x:Name="Mask_entr"                                     
+                                     ValidationMode="KeyPress"
+                                     PromptChar="0" 
+                                     ValueMaskFormat="IncludePromptAndLiterals"
+                                     ValueChanged="Mask_TextChanged"/>
+        
+
         <TableView Intent="Form" x:Name="SwiCell" RowHeight="50">
             <TableRoot>
                 <TableSection>
-                    <SwitchCell x:Name="BinarOrDecimal" Text="Binar / Decimal" />
-                    <SwitchCell x:Name="Mask_ShortOrLong" Text="Mask Short / Long" />                    
-                </TableSection>                
+                    <SwitchCell x:Name="BinarOrDecimal" 
+                                Text="Decimal / Binar"
+                                OnChanged="BinarOrDecimal_CellChanged"/>
+                    <!--
+                    <SwitchCell x:Name="Mask_ShortOrLong" 
+                                Text="Mask Long / Short"
+                                OnChanged="Mask_ShortOrLong_CellChanged"/>
+                    -->
+                </TableSection>
             </TableRoot>
         </TableView>
-        <Label Text="Amount of addresses:" FontSize="Large"/>
-        <Label Text="Coefficient of mask:" FontSize="Large"/>
-        <Label Text="Created by TheSkyMaks" HorizontalOptions="End"/>
+
+        <Label x:Name="Result_label" 
+               FontSize="Large"/>
+
+        <Label Text="Created by TheSkyMaks"
+               HorizontalOptions="End"/>
     </StackLayout>
 </ContentPage>
