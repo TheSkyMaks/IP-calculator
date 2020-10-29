@@ -28,8 +28,15 @@ namespace IP_calculator
         internal void StartWithDecimal(string[] ip, string[] mask)
         {
             ErrorMessage = "";
-            ip_decimal = Validation_Decimal(ip);
-            mask_decimal = Validation_Decimal(mask);
+            if (Validation_Decimal(ip))
+            {
+                ip_decimal = itIsDecimal;
+            }
+            if (Validation_Decimal(mask))
+            {
+                mask_decimal = itIsDecimal;
+            }
+            
             if (ip_decimal == null || mask_decimal == null)
             {
                 return;
@@ -48,8 +55,14 @@ namespace IP_calculator
         internal void StartWithBinary(string[] ip, string[] mask)
         {
             ErrorMessage = "";
-            ip_binary = Validation_Binary(ip);
-            mask_binary = Validation_Binary(mask);
+            if (Validation_Binary(ip))
+            {
+                ip_binary = ip;
+            }
+            if (Validation_Binary(mask))
+            {
+                mask_binary = mask;
+            }            
             CalcShortMask(mask_binary);
             if (ip_decimal == null || mask_decimal == null || Validation_mask(mask_binary))
             {
@@ -87,7 +100,7 @@ namespace IP_calculator
 
         #region Validation   
 
-        private string[] Validation_Binary(string[] mustBeBinary)
+        private bool Validation_Binary(string[] mustBeBinary)
         {
             if (string.Concat(mustBeBinary)
                       .Where(chr => chr != '1')
@@ -95,23 +108,24 @@ namespace IP_calculator
                       .Count() > 0)
             {
                 ErrorMessage += "number should be 0 or 1";
-                throw new ArgumentException("mustBeDecimal not 0 / 1");
+                return false;
             }
-            return mustBeBinary;
+            return true;
         }
 
-        private byte[] Validation_Decimal(string[] mustBeDecimal)
+        private byte[] itIsDecimal;
+        private bool Validation_Decimal(string[] mustBeDecimal)
         {
-            var itIsDecimal = new byte[4];
+            itIsDecimal = new byte[4];
             for (int i = 0; i < mustBeDecimal.Length; i++)
             {
                 if (!byte.TryParse(mustBeDecimal[i], out itIsDecimal[i]))
                 {
                     ErrorMessage += "number should be 0 - 255";
-                    throw new ArgumentException("mustBeDecimal not 0-255");
+                    return false;
                 }
             }
-            return itIsDecimal;
+            return true;
         }
 
         private bool Validation_mask(string[] maskOfNetWork)

@@ -8,7 +8,6 @@ namespace IP_calculator
     public partial class MainPage : ContentPage
     {
         #region XamarinView
-        internal IPcalc Calculator = new IPcalc();
         internal bool IsBinary;
         internal string[] IP_start;
         internal string[] Mask_start;
@@ -62,6 +61,7 @@ namespace IP_calculator
             }
             IP_start = seed;
             Mask_start = seed;
+            CalculatePLS();
         }
 
         private string[] Seed_Decimal()
@@ -86,9 +86,10 @@ namespace IP_calculator
 
         private void CalculatePLS()
         {
+            IPcalc Calculator = new IPcalc();
             if (IsBinary)
             {
-                Calculator.StartWithBinary(IP_start, Mask_start);
+               Calculator.StartWithBinary(IP_start, Mask_start);
             }
             else
             {
