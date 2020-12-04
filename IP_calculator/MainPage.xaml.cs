@@ -9,6 +9,7 @@ namespace IP_calculator
     {
         #region XamarinView
         internal bool IsBinary;
+        internal IPcalc Calculator;
         internal string[] IP_start;
         internal string[] Mask_start;
         /// <summary>
@@ -17,7 +18,6 @@ namespace IP_calculator
         public MainPage()
         {
             InitializeComponent();
-            IsBinary = false;
             EntryBinaryOrDecimal(false);
         }
 
@@ -40,24 +40,29 @@ namespace IP_calculator
 
         private void EntryBinaryOrDecimal(bool isBinary)
         {
+            IP_entr.Mask = "";
+            IP_entr.Watermark = "";
+            Mask_entr.Mask = "";
+            Mask_entr.Watermark = "";
+
             string[] seed;
             if (isBinary)
             {
                 IsBinary = true;
-                Mask_entr.Mask = "00000000.00000000.00000000.00000000";
-                Mask_entr.Watermark = "Your Mask. Example: 11111111.11111111.00000000.00000000";
-                IP_entr.Mask = "00000000.00000000.00000000.00000000";
-                IP_entr.Watermark = "Your IP. Example: 11111111.11111111.01000000.00000001";
-                seed = Seed_Binary();
+                seed = Seed_Binary();                
+                IP_entr.Mask += "00000000.00000000.00000000.00000000";
+                IP_entr.Watermark += "Your IP. Example: 11111111.11111111.01000000.00000001";
+                Mask_entr.Mask += "00000000.00000000.00000000.00000000";
+                Mask_entr.Watermark += "Your Mask. Example: 11111111.11111111.10000000.00000000";                
             }
             else
             {
-                IsBinary = false;                
-                IP_entr.Mask = "000.000.000.000";
-                IP_entr.Watermark = "Your IP. Example: 192.168.0.0";
-                Mask_entr.Mask = "000.000.000.000";
-                Mask_entr.Watermark = "Your Mask. Example: 255.255.0.0";
-                seed = Seed_Decimal();
+                IsBinary = false;
+                seed = Seed_Decimal();                
+                IP_entr.Mask += "000.000.000.000";
+                IP_entr.Watermark += "Your IP. Example: 192.168.0.0";
+                Mask_entr.Mask += "000.000.000.000";
+                Mask_entr.Watermark += "Your Mask. Example: 255.255.0.0";               
             }
             IP_start = seed;
             Mask_start = seed;
@@ -86,17 +91,21 @@ namespace IP_calculator
 
         private void CalculatePLS()
         {
-            IPcalc Calculator = new IPcalc();
+            Calculator = new IPcalc
+            {
+                ErrorMessage = "",
+                Results = ""
+            };
             if (IsBinary)
             {
-               Calculator.StartWithBinary(IP_start, Mask_start);
+                Calculator.StartWithBinary(IP_start, Mask_start);
             }
             else
             {
                 Calculator.StartWithDecimal(IP_start, Mask_start);
             }
             Error_label.Text = Calculator.ErrorMessage;
-            Result_label.Text = Calculator.ResultOfCalculate();
+            Result_label.Text = Calculator.Results;
         }
         #endregion
     }

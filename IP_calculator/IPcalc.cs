@@ -21,55 +21,74 @@ namespace IP_calculator
         internal double Hosts;
         internal string MaskAndIP;
         internal string ErrorMessage;
+        internal string Results;
         #endregion
 
 
         #region Control
         internal void StartWithDecimal(string[] ip, string[] mask)
         {
-            ErrorMessage = "";
             if (Validation_Decimal(ip))
             {
                 ip_decimal = itIsDecimal;
             }
+            else
+            {
+                return;
+            }
+
             if (Validation_Decimal(mask))
             {
                 mask_decimal = itIsDecimal;
             }
-            
-            if (ip_decimal == null || mask_decimal == null)
+            else
             {
                 return;
             }
-            ip_binary = ConvertIPandMask_toBinary(ip_decimal);
+                        
             mask_binary = ConvertIPandMask_toBinary(mask_decimal);
             CalcShortMask(mask_binary);
+
             if (Validation_mask(mask_binary))
             {
                 return;
             }
+
+            ip_binary = ConvertIPandMask_toBinary(ip_decimal);
             MaskAndIP = $"\nIP: {MaskOrIP_ToString(ip_binary)} \n\nMask: {MaskOrIP_ToString(mask_binary)}";
             CalculateIp();
         }
 
         internal void StartWithBinary(string[] ip, string[] mask)
         {
-            ErrorMessage = "";
             if (Validation_Binary(ip))
             {
-                ip_binary = ip;
+                ip_binary = itIsBinary;
             }
-            if (Validation_Binary(mask))
-            {
-                mask_binary = mask;
-            }            
-            CalcShortMask(mask_binary);
-            if (ip_decimal == null || mask_decimal == null || Validation_mask(mask_binary))
+            else
             {
                 return;
             }
+
+            if (Validation_Binary(mask))
+            {
+                mask_binary = itIsBinary;
+            }
+            else
+            {
+                return;
+            }
+            
+            CalcShortMask(mask_binary);
+
+            if (Validation_mask(mask_binary))
+            {
+                return;
+            }
+
             ip_decimal = ConvertIPandMask_toDecimal(ip_binary);
             mask_decimal = ConvertIPandMask_toDecimal(mask_binary);
+
             MaskAndIP = $"IP: {MaskOrIP_ToString(ip_decimal)} \n\nMask: {MaskOrIP_ToString(mask_decimal)}";
             CalculateIp();
         }
@@ -81,33 +100,33 @@ namespace IP_calculator
             CalcNetWorkAddress(ip_binary, mask_binary);
             CalcIvertMask(mask_binary);
             CalcBroadcastAddress(nwAddress, invert_mask_binary);
+            ResultOfCalculate();
         }
 
-        internal string ResultOfCalculate()
+        internal void ResultOfCalculate()
         {
-            var Results = "";
-            Results += $"{MaskAndIP}"
+            Results = $"{MaskAndIP}"
                         + $"\n\n Short Mask: {ShortMask}"
                         + $"\n\n Inverted Mask: {MaskOrIP_ToString(invert_mask_decimal)}  |  {MaskOrIP_ToString(invert_mask_binary)}"
                         + $"\n\n Network: {MaskOrIP_ToString(NetWorkAddress)}  |  {MaskOrIP_ToString(nwAddress)}"
                         + $"\n\n Broadcast {MaskOrIP_ToString(BroadCastAddress)}  |  {MaskOrIP_ToString(BroadcastAddr)}"
                         + $"\n\n Addresses: {Addresses}"
                         + $"\n\n Hosts: {Hosts}";
-            return Results;
         }
         #endregion
 
 
         #region Validation   
-
+        private string[] itIsBinary;
         private bool Validation_Binary(string[] mustBeBinary)
         {
-            if (string.Concat(mustBeBinary)
+            itIsBinary = mustBeBinary;
+            if (string.Concat(itIsBinary)
                       .Where(chr => chr != '1')
                       .Where(chr => chr != '0')
                       .Count() > 0)
             {
-                ErrorMessage += "number should be 0 or 1";
+                ErrorMessage += "\nnumber should be 0 or 1";
                 return false;
             }
             return true;
@@ -121,7 +140,7 @@ namespace IP_calculator
             {
                 if (!byte.TryParse(mustBeDecimal[i], out itIsDecimal[i]))
                 {
-                    ErrorMessage += "number should be 0 - 255";
+                    ErrorMessage += "\nnumber should be 0 - 255";
                     return false;
                 }
             }
@@ -133,7 +152,7 @@ namespace IP_calculator
             var last1 = string.Concat(maskOfNetWork).LastIndexOf('1');
             if (!(last1 < ShortMask))
             {
-                ErrorMessage += "Mask should contain 1, and then 0. Example 1111 1111.1111 1111.1111 1100.0000 0000";
+                ErrorMessage += "\nMask should contain 1, and then 0. Example 1111 1111.1111 1111.1111 1100.0000 0000";
                 return true;
             }
             return false;

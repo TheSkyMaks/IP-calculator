@@ -11,12 +11,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <DocumentationFile>IP_calculator\IP_calculator.xml</DocumentationFile>
+    <DocumentationFile>Documentation\IP_calculator.xml</DocumentationFile>
     <Optimize>true</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>IP_calculator\IP_calculator.xml</DocumentationFile>
+    <DocumentationFile>Documentation\IP_calculator.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
